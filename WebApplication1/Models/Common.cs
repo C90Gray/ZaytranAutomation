@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-
 namespace WebApplication1.Models
 {
-    public class Email
+    
+    public class Common
     {
-        public string Username { get; set; }
-        public string EmailAdd { get; set; }
+        public List<FormValues> FormValues { get; set; }
+        public Email Email { get; set; }
     }
 }

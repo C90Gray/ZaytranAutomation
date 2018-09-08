@@ -160,7 +160,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\FormValues.cs" />
     <Compile Include="Models\Gripper.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

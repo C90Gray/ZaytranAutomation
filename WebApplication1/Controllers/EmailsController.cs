@@ -10,7 +10,7 @@ using System.Web.UI;
 using System.Web.Mvc;
 using System;
 using System.Web.Script.Serialization;
-using WebApplication1.Controllers;
+using WebApplication1.Models;
 using Newtonsoft.Json;
 
 namespace WebApplication1.Models
@@ -19,16 +19,14 @@ namespace WebApplication1.Models
     {
         
         [HttpPost]
-        public JsonResult SendPDFEmail(Email model)
+        public JsonResult SendPDFEmail(WebApplication1.Models.Common model)
         {
            
-            Console.WriteLine(model.FormValues);
-
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[2] {
                                 new DataColumn("Field"),
                                 new DataColumn("Value")});
-            for (int i = 0; i < model.FormValues.Length; i++)
+            for (int i = 0; i < model.FormValues.Count; i++)
             {
                 dt.Rows.Add(model.FormValues[i].Field, model.FormValues[i].Value);
             }
@@ -85,9 +83,9 @@ namespace WebApplication1.Models
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Close();
 
-                        MailMessage mm = new MailMessage("donotreply.zaytranautomation@gmail.com", model.Mail);
+                        MailMessage mm = new MailMessage("donotreply.zaytranautomation@gmail.com", model.Email.EmailAdd);
                         mm.Subject = "Gripper Sizer Form";
-                        mm.Body = "Hello, " + model.Username + ", Thank you for using grippers.com. Attatched is your Gripper Sizer Form";
+                        mm.Body = "Hello, " + model.Email.Username + ", Thank you for using grippers.com. Attatched is your Gripper Sizer Form";
                         mm.Attachments.Add(new Attachment(new MemoryStream(bytes), "iTextSharpPDF.pdf"));
                         mm.IsBodyHtml = true;
                         SmtpClient smtp = new SmtpClient();

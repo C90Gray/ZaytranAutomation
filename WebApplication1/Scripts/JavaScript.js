@@ -455,11 +455,13 @@ function SaveData(callback) {
 
 function SendEmail(formvalues, username, email) {
     alert("email")
-
+    var Info = {
+        Username: username,
+        EmailAdd: email
+    };
     var model = {
         FormValues: formvalues,
-        Username: username,
-        Email: email
+        Email: Info
     };
     $.ajax({
         url: '/Emails/SendPDFEmail',
