@@ -3,7 +3,7 @@
 }
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Content/JavaScript.js"></script>
+<script src="~/Scripts/JavaScript.js"></script>
 <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -239,7 +239,7 @@
         <div class="card card-body bg-light" id="hidden">
             <p>To have this form emailed to yourself and Zaytran Automation, click Save below:</p>
             <div id="hiddenbtn">
-                <a class="btn btn-outline-warning" id="sendemail" onclick="SaveData(GetUnits)">Save</a>
+                <a class="btn btn-outline-warning" id="sendemail" onclick="SaveData(GetUnits())">Save</a>
                 <a class="btn btn-outline-danger" id="reload" onclick="ReloadForm(GetUnits)">Refresh Form</a>
             </div>
         </div>

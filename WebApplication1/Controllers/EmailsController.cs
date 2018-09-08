@@ -10,24 +10,27 @@ using System.Web.UI;
 using System.Web.Mvc;
 using System;
 using System.Web.Script.Serialization;
+using WebApplication1.Controllers;
+using Newtonsoft.Json;
 
 namespace WebApplication1.Models
 {
-    public class Emails : Controller
+    public class EmailsController : Controller
     {
-
-        public string SendPDFEmail(Email[] formvalues, string username, string email)
+        
+        [HttpPost]
+        public JsonResult SendPDFEmail(Email model)
         {
            
-            Console.WriteLine(formvalues);
+            Console.WriteLine(model.FormValues);
 
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[2] {
                                 new DataColumn("Field"),
                                 new DataColumn("Value")});
-            for (int i = 0; i < formvalues.Length; i++)
+            for (int i = 0; i < model.FormValues.Length; i++)
             {
-                dt.Rows.Add(formvalues[i].Field, formvalues[i].Value);
+                dt.Rows.Add(model.FormValues[i].Field, model.FormValues[i].Value);
             }
 
 
@@ -82,9 +85,9 @@ namespace WebApplication1.Models
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Close();
 
-                        MailMessage mm = new MailMessage("donotreply.zaytranautomation@gmail.com", email);
+                        MailMessage mm = new MailMessage("donotreply.zaytranautomation@gmail.com", model.Mail);
                         mm.Subject = "Gripper Sizer Form";
-                        mm.Body = "Hello, " + username + ", Thank you for using grippers.com. Attatched is your Gripper Sizer Form";
+                        mm.Body = "Hello, " + model.Username + ", Thank you for using grippers.com. Attatched is your Gripper Sizer Form";
                         mm.Attachments.Add(new Attachment(new MemoryStream(bytes), "iTextSharpPDF.pdf"));
                         mm.IsBodyHtml = true;
                         SmtpClient smtp = new SmtpClient();
@@ -98,11 +101,11 @@ namespace WebApplication1.Models
                         smtp.Port = 587;
                         smtp.Send(mm);
                     }
-                    
+
                 }
             }
             string alerttext = "Your email has been sent";
-            return alerttext;
+            return Json(alerttext, JsonRequestBehavior.AllowGet);
 
         }
     }

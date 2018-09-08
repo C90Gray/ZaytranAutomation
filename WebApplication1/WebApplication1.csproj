@@ -190,7 +190,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\jaworientation.PNG" />
     <Content Include="Content\Images\ZaytranDiagram.png" />
-    <Content Include="Content\JavaScript.js" />
+    <Content Include="Scripts\JavaScript.js" />
     <Content Include="Content\StyleSheet1.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

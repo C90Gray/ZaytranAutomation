@@ -7,7 +7,8 @@ namespace WebApplication1.Models
 {
     public class Email
     {
-        public string Field { get; set; }
-        public string Value { get; set; }
+        public string[] FormValues { get; set; }
+        public string Username { get; set; }
+        public string Mail { get; set; }
     }
 }

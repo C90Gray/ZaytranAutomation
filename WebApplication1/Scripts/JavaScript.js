@@ -309,11 +309,10 @@ function ReloadForm(callback) {
 }
 
 function SaveData(callback) {
-
     var user = document.getElementById('cname').value;
     var email = document.getElementById('email').value;
     var formdata = [];
-    var units = callback();
+    var units = callback;
     if (units === "metric") {
         var mgrip;
         var midod;
@@ -455,12 +454,19 @@ function SaveData(callback) {
 }
 
 function SendEmail(formvalues, username, email) {
+    alert("email")
+
+    var model = {
+        FormValues: formvalues,
+        Username: username,
+        Email: email
+    };
     $.ajax({
-        url: "/Emails/SendPDFEmail",
+        url: '/Emails/SendPDFEmail',
         dataType: "JSON",
-        type: 'Post',
+        type: 'POST',
         contentType: 'application/json;',
-        data: JSON.stringify({ formvalues: formvalues, username: username, email: email }),
+        data: JSON.stringify(model),
         success: function (alerttext) {
             alert(alerttext);
         }
