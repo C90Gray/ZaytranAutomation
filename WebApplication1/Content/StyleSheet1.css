@@ -1,0 +1,132 @@
+﻿body {
+    margin: 5px;
+    padding: 5px;
+    height: 100vh;
+    width: 98vw;
+    display: block;
+    background-image: linear-gradient(#E0E8F0,#B9E5F3,#D3D0DA);
+    background-attachment:fixed;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+legend {
+    justify-content: center !important;
+    text-align: center !important;
+    align-content: center !important;
+    margin-bottom: 0px;
+    margin-left: 16px;
+}
+
+fieldset {
+    background-color: #efefef;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.64);
+}
+
+.justify-content-center {
+    justify-content: center !important;
+    text-align: center !important;
+    align-content: center !important;
+}
+
+#btn {
+    display:flex;
+    justify-content: center !important;
+    width: 20vw;
+}
+
+#mbtn {
+    display: flex;
+    justify-content: center !important;
+    width: 20vw;
+}
+
+.btn-success{
+    margin-top:10px;
+}
+
+.btn-success:hover {
+    color: white !important;
+}
+
+#panelControllers {
+    height: 50px;
+    display:flex;
+    justify-content:center;
+    margin:15px;
+}
+
+.panelControlBtn {
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 3px;
+    height: 50px;
+    color: whitesmoke;
+    padding: 5px;
+}
+
+#met {
+    background-color: #8F9491;
+}
+
+#imp {
+    background-color: #3A3A3A;
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+    .panelControlBtn:hover {
+        background-color: #616163!important;
+    }
+
+#hide1 {
+    position: absolute;
+    opacity: 0;
+}
+
+#hide2 {
+    position: absolute;
+    opacity: 0;
+}
+
+.txt{
+    font: bold 38px ariel, veranda;
+}
+
+#hiddendiv{
+    display: none;
+    text-align:center;
+    justify-content:center!important;
+    align-content:center;
+}
+
+#hiddendiv2{
+    display: none;
+    text-align:center;
+    justify-content:center!important;
+    align-content:center;
+}
+
+.modalpop{
+    width:90%;
+    height:90%;
+}
+
+button.btn.btn-outline-info.ex{
+    margin-left:15px;
+}
