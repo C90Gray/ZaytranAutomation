@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         [HttpPost]
         public JsonResult SendPDFEmail(WebApplication1.Models.Common model)
         {
-           
+
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[2] {
                                 new DataColumn("Field"),
@@ -91,10 +91,10 @@ namespace WebApplication1.Models
                         SmtpClient smtp = new SmtpClient();
                         smtp.Host = "smtp.gmail.com";
                         smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
                         NetworkCredential NetworkCred = new NetworkCredential();
-                        NetworkCred.UserName = "donotreply.zaytranautiomation@gmail.com";
-                        NetworkCred.Password = "W3S3llgrippers";
-                        smtp.UseDefaultCredentials = true;
+                        NetworkCred.UserName = "donotreply.zaytranautomation@gmail.com";
+                        NetworkCred.Password = "W3S3llgrippers";                        
                         smtp.Credentials = NetworkCred;
                         smtp.Port = 587;
                         smtp.Send(mm);
