@@ -386,7 +386,7 @@ function SaveData(callback) {
         idod = document.getElementsByClassName('IDOD');
         for (var k = 0; k < idod.length; k++) {
             if (idod[k].checked) {
-                midod = idod[k].value;
+                iidod = idod[k].value;
             }
         }
         gr = document.getElementsByClassName('grip');
@@ -454,7 +454,6 @@ function SaveData(callback) {
 }
 
 function SendEmail(formvalues, username, email) {
-    alert("email")
     var Info = {
         Username: username,
         EmailAdd: email

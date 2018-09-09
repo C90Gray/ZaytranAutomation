@@ -39,7 +39,7 @@ namespace WebApplication1.Models
                     string companyName = "Zaytran Automation";
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<table width='100%' cellspacing='0' cellpadding='2'>");
-                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Order Sheet</b></td></tr>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Zaytran Sizer Form</b></td></tr>");
                     sb.Append("<tr><td colspan = '2'></td></tr>");
                     sb.Append("</td><td><b>Date: </b>");
                     sb.Append(DateTime.Now);
@@ -53,7 +53,7 @@ namespace WebApplication1.Models
                     sb.Append("<tr>");
                     foreach (DataColumn column in dt.Columns)
                     {
-                        sb.Append("<th style = 'background-color: #D20B0C;color:#ffffff'>");
+                        sb.Append("<th style = 'background-color:#D20B0C; color:#ffffff'>");
                         sb.Append(column.ColumnName);
                         sb.Append("</th>");
                     }
