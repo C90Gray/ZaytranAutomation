@@ -350,8 +350,8 @@ function SaveData(callback) {
 
 
 
-    
-        formdata.push({ Field: "Application Description", Value: "Application Description" });
+        formdata.push({ Field: "FIELD", Value: "VALUE" });
+        formdata.push({ Field: "***Application Description***", Value: "***Application Description***" });
         formdata.push({ Field: "Pressure (BAR)", Value: "" + document.getElementById('mpsi').value });
         formdata.push({ Field: "ID or OD", Value: "" + midod });
         formdata.push({ Field: "Max Part Weight (Kg)", Value: "" + document.getElementById('mMaxwt').value });
@@ -360,11 +360,11 @@ function SaveData(callback) {
         formdata.push({ Field: "Jaw Orientation", Value: "" + morient });
         formdata.push({ Field: "Force Up/Down (m/s2)", Value: "" + document.getElementById('mgup').value });
         formdata.push({ Field: "Force Left/Righ (m/s2)", Value: "" + document.getElementById('mgside').value });
-        formdata.push({ Field: "Application Requirements", Value: "Application Requirements" });
+        formdata.push({ Field: "***Application Requirements***", Value: "***Application Requirements***" });
         formdata.push({ Field: "Force Required (N)", Value: "" + document.getElementById('mforce').value });
         formdata.push({ Field: "Ma (Joules)", Value: "" + document.getElementById('mmainch').value });
         formdata.push({ Field: "Mb/Mc (Joules)", Value: "" + document.getElementById('mmbmcinch').value });
-        formdata.push({ Field: "Reccomendations", Value: "Reccomendations" });
+        formdata.push({ Field: "***Reccomendations***", Value: "***Reccomendations***" });
         formdata.push({ Field: "Model Name", Value: "" + model1 });
         formdata.push({ Field: "Model Ma (Joules)", Value: "" + ma1 });
         formdata.push({ Field: "Model Mb (Joules)", Value: "" + mbmc1 });
@@ -416,8 +416,8 @@ function SaveData(callback) {
         var ioforce2 = itable.rows[2].cells[5].innerHTML;
 
 
-        
-        formdata.push({ Field: "Application Description", Value: "Application Description" });
+        formdata.push({ Field: "FIELD", Value: "VALUE" });
+        formdata.push({ Field: "***Application Description***", Value: "***Application Description***" });
         formdata.push({ Field: "Pressure (PSI)", Value: "" + document.getElementById('psi').value });
         formdata.push({ Field: "ID or OD", Value: "" + iidod });
         formdata.push({ Field: "Max Part Weight (lb)", Value: "" + document.getElementById('Maxwt').value });
@@ -426,13 +426,13 @@ function SaveData(callback) {
         formdata.push({ Field: "Jaw Orientation", Value: "" + iorient });
         formdata.push({ Field: "Force Up/Down (G Force)", Value: "" + document.getElementById('gup').value });
         formdata.push({ Field: "Force Left/Righ (G Force)", Value: "" + document.getElementById('gside').value });
-        formdata.push({ Field: "Application Requirements", Value: "Application Requirements" });
+        formdata.push({ Field: "***Application Requirements***", Value: "***Application Requirements***" });
         formdata.push({ Field: "Force Required (lb)", Value: "" + document.getElementById('force').value });
         formdata.push({ Field: "Ma (in/pounds)", Value: "" + document.getElementById('mainch').value });
         formdata.push({ Field: "Mb/Mc (in/pounds)", Value: "" + document.getElementById('mbmcinch').value });
         formdata.push({ Field: "Ma (ft/pounds)", Value: "" + document.getElementById('mafoot').value });
         formdata.push({ Field: "Mb/Mc (ft/pounds)", Value: "" + document.getElementById('mbmcfoot').value });
-        formdata.push({ Field: "Reccomendations", Value: "Reccomendations" });
+        formdata.push({ Field: "***Reccomendations***", Value: "***Reccomendations***" });
         formdata.push({ Field: "Model Name", Value: "" + imodel1 });
         formdata.push({ Field: "Model Ma (in/pound)", Value: "" + ima1 });
         formdata.push({ Field: "Model Mb (in/pound)", Value: "" + imbmc1 });

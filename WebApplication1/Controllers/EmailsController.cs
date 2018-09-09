@@ -9,9 +9,7 @@ using iTextSharp.text.html.simpleparser;
 using System.Web.UI;
 using System.Web.Mvc;
 using System;
-using System.Web.Script.Serialization;
-using WebApplication1.Models;
-using Newtonsoft.Json;
+
 
 namespace WebApplication1.Models
 {
@@ -19,7 +17,7 @@ namespace WebApplication1.Models
     {
         
         [HttpPost]
-        public JsonResult SendPDFEmail(WebApplication1.Models.Common model)
+        public JsonResult SendPDFEmail(Common model)
         {
 
             DataTable dt = new DataTable();
@@ -39,7 +37,7 @@ namespace WebApplication1.Models
                     string companyName = "Zaytran Automation";
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<table width='100%' cellspacing='0' cellpadding='2'>");
-                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Zaytran Sizer Form</b></td></tr>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Zaytran Sizer Forms</b></td></tr>");
                     sb.Append("<tr><td colspan = '2'></td></tr>");
                     sb.Append("</td><td><b>Date: </b>");
                     sb.Append(DateTime.Now);
@@ -47,20 +45,19 @@ namespace WebApplication1.Models
                     sb.Append("<tr><td colspan = '2'><b>Company Name :</b> ");
                     sb.Append(companyName);
                     sb.Append("</td></tr>");
+                    sb.Append("</td><td><b>Customer Name: </b>");
+                    sb.Append(model.Email.Username);
+                    sb.Append(" </td></tr>");
+                    sb.Append("<tr><td colspan = '2'><b>Customer Email :</b> ");
+                    sb.Append(model.Email.EmailAdd);
+                    sb.Append("</td></tr>");
                     sb.Append("</table>");
                     sb.Append("<br />");
                     sb.Append("<table border = '1'>");
-                    sb.Append("<tr>");
-                    foreach (DataColumn column in dt.Columns)
-                    {
-                        sb.Append("<th style = 'background-color:#D20B0C; color:#ffffff'>");
-                        sb.Append(column.ColumnName);
-                        sb.Append("</th>");
-                    }
-                    sb.Append("</tr>");
+                  
                     foreach (DataRow row in dt.Rows)
                     {
-                        sb.Append("<tr>");
+                        sb.Append("<tr style= 'text-align:center'>");
                         foreach (DataColumn column in dt.Columns)
                         {
                             sb.Append("<td>");
@@ -85,7 +82,8 @@ namespace WebApplication1.Models
 
                         MailMessage mm = new MailMessage("donotreply.zaytranautomation@gmail.com", model.Email.EmailAdd);
                         mm.Subject = "Gripper Sizer Form";
-                        mm.Body = "Hello, " + model.Email.Username + ", Thank you for using grippers.com. Attatched is your Gripper Sizer Form";
+                        mm.Body = "Hello " + model.Email.Username + "! Thank you for using grippers.com. Attatched is your Gripper Sizer Form. <br><br>" +
+                            "For any questions please email us at support@grippers.com or call 440-324-2814";
                         mm.Attachments.Add(new Attachment(new MemoryStream(bytes), "iTextSharpPDF.pdf"));
                         mm.IsBodyHtml = true;
                         SmtpClient smtp = new SmtpClient();
