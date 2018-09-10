@@ -143,7 +143,7 @@ function GetForce(gside, gup, maxG, friction, unit) {
         force = force * 4;
     }
     if (unit === "metric") {
-        document.getElementById('mforce').value = force;
+        document.getElementById('mforce').value = Number(Math.round(force + 'e3') + 'e-3');
     }
     else {
         document.getElementById('force').value = force;
@@ -179,7 +179,8 @@ function GetM(side, up, orientation, jtorque) {
         Ma = up + jtorque;
     }
     if (unit === "metric") {
-        document.getElementById('mmainch').value = Ma * 0.11298;
+        Ma = Ma * 0.11298;
+        document.getElementById('mmainch').value = Number(Math.round(Ma + 'e3') + 'e-3');
 
     }
     else {
@@ -194,7 +195,8 @@ function GetM(side, up, orientation, jtorque) {
         Mb = side;
     }
     if (unit === "metric") {
-        document.getElementById('mmbmcinch').value = Mb * 0.11298;
+        Mb = Mb * 0.11298;
+        document.getElementById('mmbmcinch').value = Number(Math.round(Mb + 'e3') + 'e-3');
     }
     else {
         document.getElementById('mbmcinch').value = Mb;
