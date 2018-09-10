@@ -123,6 +123,8 @@ namespace WebApplication1.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //This finds models and returns them to the GetModels javascript function
         public JsonResult FindModels(float Ma, float Mb)
         {
             if (double.IsNaN(Ma) || double.IsNaN(Mb))

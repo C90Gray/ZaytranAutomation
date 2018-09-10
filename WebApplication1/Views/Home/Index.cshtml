@@ -10,6 +10,8 @@
 <body>
     <h2 class="text-center">Gripper Sizer Form</h2>
 
+    <!--Customer Information - not effected by refresh button-->
+
     <div class="row">
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
@@ -30,10 +32,14 @@
         <div class="col-lg-3"></div>
     </div>
 
+    <!--Form selection buttons - imperial/metric-->
+
     <div id="panelControllers">
         <label class="panelControlBtn" onclick="GetUnits()" data-id="1" id="imp"><input class="btn btn-default" id="hide1" type="radio" checked="checked" name="toggle"><span class="txt">Imperial</span></label>
         <label class="panelControlBtn" onclick="GetUnits()" data-id="2" id="met"><input class="btn btn-default" id="hide2" type="radio" name="toggle"><span class="txt">Metric</span></label>
     </div>
+
+    <!--Imperial form start here (default form)-->
 
     <div class="panel" id="panel1">
         <hr />
@@ -139,7 +145,7 @@
         </div>
     </div>
 
-    @* Metric form starts here *@
+    <!--metric form starts here-->
 
     <div class="panel" id="panel2" style="display:none">
         <hr />
@@ -247,7 +253,7 @@
 
     <div id="hiddendiv2" style="display:none">
         <hr />
-        <div class="card card-body bg-light" id="hidden">     
+        <div class="card card-body bg-light" id="hidden">
             <p>Please reload and try again</p>
             <div id="hiddenbtn">
                 <a class="btn btn-outline-danger" id="reload" onclick="ReloadForm(GetUnits)">Refresh Form</a>
@@ -255,7 +261,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Jaw Orientaion Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
 
@@ -273,7 +279,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Gripper Requirements Modal -->
     <div id="myModal2" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
 

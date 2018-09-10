@@ -16,6 +16,7 @@ var unit = "imperial";
 var psi;
 var currentPanel = '1';
 
+//Function that gets which units are being shown on form (metric or imperial)
 function GetUnits() {
     $('.panelControlBtn').on("click", function () {
         var ID = $(this).attr('data-id');
@@ -45,9 +46,13 @@ function GetUnits() {
     return unit;
 }
 
+//ALL FUNCTIONS FOLLOWING GETUNITS() LOOK AT WHAT UNIT IS BEING SHOWN AND RETURN DIFFERENT INFORMATION DEPENDING ON THE UNIT
+//ALL FUNCTIONS THAT GRAB METRIC INFORMATION THEN CONVERT THAT INFORMATION INTO IMPERIAL VALUES BECAUSE THE MODEL IN THE DB USES IMPERICAL VALUES
+
+
+//GSide gets the value for the g force left to right
 function GSide(callback) {
     unit = callback();
-    console.log(unit);
     if (unit === "metric") {
         gside = document.getElementById('mgside').value;
         if (gside === "") {
@@ -61,6 +66,7 @@ function GSide(callback) {
         }
         g = parseFloat(g);
         g = g / 9.80665;
+        //since g force up down is always + 1, the value for gup is saved with +1 here instead of adding 1 every time gup is used
         gup = g + 1;
     }
     else {
@@ -75,14 +81,16 @@ function GSide(callback) {
             g = 0;
         }
         g = parseFloat(g);
+        //since g force up down is always + 1, the value for gup is saved with +1 here instead of adding 1 every time gup is used
         gup = g + 1;
-        console.log("the value for gup is " + gup);
     }
 
+    // values gside, gup and unit are then passed to CalculateMaxG function
     CalculateMaxG(gside, gup, unit);
 
 }
 
+//This function calculates MaxG
 function CalculateMaxG(gside, gup, unit) {
     if (gside >= gup) {
         maxG = gside;
@@ -91,10 +99,11 @@ function CalculateMaxG(gside, gup, unit) {
         maxG = gup;
     }
 
-    console.log("the value for maxg is " + maxG);
+    // the values are then passed to Save Grip function
     SaveGrip(gside, gup, maxG, unit);
 }
 
+//Gets the grip orientation (ID or OD)
 function SaveGrip(gside, gup, maxG, unit) {
 
     grip = document.getElementsByClassName('grip');
@@ -105,11 +114,12 @@ function SaveGrip(gside, gup, maxG, unit) {
         }
 
     }
-    console.log(friction);
 
+    //passes info to GetForce function
     GetForce(gside, gup, maxG, friction, unit);
 }
 
+// this function gets the jaw length, max weight, and force values. The force values are then input into the form in the app requirements section
 function GetForce(gside, gup, maxG, friction, unit) {
     if (unit === "metric") {
         jlength = document.getElementById('mjlength').value;
@@ -139,9 +149,12 @@ function GetForce(gside, gup, maxG, friction, unit) {
         document.getElementById('force').value = force;
     }
     jtorque = force * jlength;
+
+    //all info is then passed to GetOrientation function
     GetOrientation(side, gup, jlength, maxWt, jtorque);
 }
 
+//Gets jaw orientaion (Down, Up/Down, Left-Right)
 function GetOrientation(side, gup, jlength, maxWt, jtourque, unit) {
     o = document.getElementById('orientation');
     orientation = o.options[o.selectedIndex].value;
@@ -153,9 +166,11 @@ function GetOrientation(side, gup, jlength, maxWt, jtourque, unit) {
         up = gup * jlength * maxWt;
     }
 
+    //passes to GetM
     GetM(side, up, orientation, jtorque, unit);
 }
 
+//This function calculates the values of Ma and Mb/Mc and inserts them into the form in the App Requirements section
 function GetM(side, up, orientation, jtorque) {
     if (orientation === "Left-Right") {
         Ma = side + jtorque;
@@ -186,10 +201,11 @@ function GetM(side, up, orientation, jtorque) {
         document.getElementById('mbmcfoot').value = Mb / 12;
     }
 
-
+    //Then getmodel function is called
     GetModel(Ma, Mb, unit);
 }
 
+//This function querys the db and returns an array of models whos both Ma and Mb/Mc values are less than the Ma Mb/mc values calculated above in the order of lowest to highest price
 function GetModel(Ma, Mb, unit) {
     $.ajax({
         url: '/Grippers/FindModels',
@@ -199,11 +215,14 @@ function GetModel(Ma, Mb, unit) {
         contentType: 'application/json; charset=utf-8',
         success: function (models) {
             if (Array.isArray(models)) {
+                //the models are then added to their respectful tables.
+                //we still need to get psi to calculate the Ma and Mb/Mc values that the models are capible of producing
+                //the for loop only loops through the two lowest priced model items.
+                //each loop generates more rows to the table and poplutates them with the correct information. 
                 if (unit === "metric") {
                     psi = document.getElementById('mpsi').value;
                     psi = psi * 14.5038;
-
-                    console.log(models);
+                    
                     var mtable = document.getElementById("mmodeltable");
                     for (var i = 0; i < 2; i++) {
                         var mrow = mtable.insertRow(-1);
@@ -269,13 +288,15 @@ function GetModel(Ma, Mb, unit) {
 
                     }
                 }
+
+                // after the table data is created, the function hides the submit button and shows the hidden div containing the save and refresh button
                 document.getElementById('btn').style.display = "none";
                 document.getElementById('mbtn').style.display = "none";
                 document.getElementById('hiddendiv').style.display = "block";
 
             }
             else {
-                alert(models);
+                //if a form value was not submitted or there was an error returning the model array, the submit button hides and the hidden div with only the refresh button appears
                 document.getElementById('btn').style.display = "none";
                 document.getElementById('mbtn').style.display = "none";
                 document.getElementById('hiddendiv2').style.display = "block";
@@ -285,6 +306,9 @@ function GetModel(Ma, Mb, unit) {
     });
 }
 
+//this function only runs when the refresh button is clicked
+//it first runs the GetUnit function to determine what unit form is displayed
+//then it refreshes all the fields in the form, and deletes the bottom two rows of the table on that page
 function ReloadForm(callback) {
     document.getElementById("myForm").reset();
     document.getElementById("myForm1").reset();
@@ -302,12 +326,18 @@ function ReloadForm(callback) {
             document.getElementById("modeltable").deleteRow(-1);
         }
     }
+
+    //it then hides the hidden divs and displays the submut buttons again
     document.getElementById("hiddendiv").style.display = "none";
     document.getElementById("hiddendiv2").style.display = "none";
     document.getElementById('btn').style.display = "block";
     document.getElementById('mbtn').style.display = "block";
 }
 
+//This function only runs if the save button is clicked
+//it first calls the GetUnits function to see which form to save data from.
+//It then gets the username and email info from the Customer Info section 
+//it then pulls out all the info from the entire webpage and creates an array of objects with both field and value properties.
 function SaveData(callback) {
     var user = document.getElementById('cname').value;
     var email = document.getElementById('email').value;
@@ -448,11 +478,12 @@ function SaveData(callback) {
 
     }
 
-    console.log(formdata);
+    //it then sends all the data to the SendEmail function
     SendEmail(formdata, user, email);
 
 }
 
+//this function calls the SendPDFEmail method in the emails controller which converts the data to a pdf and emails it to the provided email address. 
 function SendEmail(formvalues, username, email) {
     var Info = {
         Username: username,
