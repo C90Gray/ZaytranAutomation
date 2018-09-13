@@ -96,6 +96,22 @@ namespace WebApplication1.Models
                         smtp.Credentials = NetworkCred;
                         smtp.Port = 587;
                         smtp.Send(mm);
+
+                        MailMessage mb = new MailMessage("donotreply.zaytranautomation@gmail.com", "support@grippers.com");
+                        mb.Subject = "Gripper Sizer Form";
+                        mb.Body = "New sizer form from " + model.Email.Username + " at " + model.Email.EmailAdd;
+                        mb.Attachments.Add(new Attachment(new MemoryStream(bytes), "iTextSharpPDF.pdf"));
+                        mb.IsBodyHtml = true;
+                        SmtpClient smtp1 = new SmtpClient();
+                        smtp1.Host = "smtp.gmail.com";
+                        smtp1.EnableSsl = true;
+                        smtp1.UseDefaultCredentials = false;
+                        NetworkCredential NetworkCred1 = new NetworkCredential();
+                        NetworkCred1.UserName = "donotreply.zaytranautomation@gmail.com";
+                        NetworkCred1.Password = "W3S3llgrippers";
+                        smtp1.Credentials = NetworkCred1;
+                        smtp.Port = 587;
+                        smtp.Send(mb);
                     }
 
                 }
