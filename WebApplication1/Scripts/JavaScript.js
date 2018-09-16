@@ -209,13 +209,41 @@ function GetM(side, up, orientation, jtorque) {
 
 //This function querys the db and returns an array of models whos both Ma and Mb/Mc values are less than the Ma Mb/mc values calculated above in the order of lowest to highest price
 function GetModel(Ma, Mb, unit) {
+    var Specs = [];
+
+    Specs.push({ ModelName: "MAGNUM-AL-130", Stroke: ".5 to 1.0 inches", ForceID: 29, ForceOD: 29, Ma: 212, MbMc: 141, Price: 400 });
+    Specs.push({ ModelName: "MAGNUM-PET-130", Stroke: ".5 to 1.0 inches", ForceID: 29, ForceOD: 29, Ma: 88, MbMc: 99, Price: 500 });
+    Specs.push({ ModelName: "GPAL-40", Stroke: "2 inches", ForceID: 132, ForceOD: 176, Ma: 295, MbMc: 302, Price: 599 });
+    Specs.push({ ModelName: "MAGNUM-AL-450-26", Stroke: "1.02 inches", ForceID: 100, ForceOD: 100, Ma: 840, MbMc: 530, Price: 630 });
+    Specs.push({ ModelName: "GPAL-100", Stroke: "3 inches", ForceID: 196, ForceOD: 230, Ma: 648, MbMc: 1080, Price: 849 });
+    Specs.push({ ModelName: "GPAL-200", Stroke: "4 inches", ForceID: 364, ForceOD: 443, Ma: 1095, MbMc: 1825, Price: 1499 });
+    Specs.push({ ModelName: "GP or GPL-400", Stroke: "2.5 to 6 inches", ForceID: 503.5, ForceOD: 636.2, Ma: 1743, MbMc: 2905, Price: 1947 });
+    Specs.push({ ModelName: "XRAY-S-2200", Stroke: "7.87 to 13.77 inches", ForceID: 495, ForceOD: 590, Ma: 5712, MbMc: 5400, Price: 2700 });
+    Specs.push({ ModelName: "XRAY-S-5800", Stroke: "7.87 inches", ForceID: 1300, ForceOD: 1300, Ma: 11400, MbMc: 7200, Price: 5700 });
+    Specs.push({ ModelName: "Req Force Too High", Stroke: "100000", ForceID: 100000, ForceOD: 100000, Ma: 100000, MbMc: 100000, Price: 100000 });
+    Specs.push({ ModelName: "Req Torque Too High", Stroke: "100000", ForceID: 100000, ForceOD: 100000, Ma: 100000, MbMc: 100000, Price: 100000 });
+
+    var data = {
+        UserMa: Ma,
+        UserMb: Mb
+    };
+
+    var grips = {
+        User: data,
+        Specs: Specs
+    };
+
+
     $.ajax({
         url: '/Grippers/FindModels',
         dataType: 'JSON',
-        type: 'GET',
-        data: { Ma: Ma, Mb: Mb },
+        type: 'Post',
+        data: JSON.stringify(grips),
         contentType: 'application/json; charset=utf-8',
         success: function (models) {
+
+            console.log(models);
+
             if (Array.isArray(models)) {
                 //the models are then added to their respectful tables.
                 //we still need to get psi to calculate the Ma and Mb/Mc values that the models are capible of producing
@@ -224,7 +252,7 @@ function GetModel(Ma, Mb, unit) {
                 if (unit === "metric") {
                     psi = document.getElementById('mpsi').value;
                     psi = psi * 14.5038;
-                    
+
                     var mtable = document.getElementById("mmodeltable");
                     for (var i = 0; i < 2; i++) {
                         var mrow = mtable.insertRow(-1);
@@ -235,14 +263,14 @@ function GetModel(Ma, Mb, unit) {
                         var mcell5 = mrow.insertCell(4);
                         var mcell6 = mrow.insertCell(5);
 
-                        var mforceOD = models[i].Force_OD * psi / 100;
+                        var mforceOD = models[i].ForceOD * psi / 100;
                         mforceOD = parseFloat(mforceOD * 4.44822).toFixed(3);
-                        var mforceID = models[i].Force_ID * psi / 100;
+                        var mforceID = models[i].ForceID * psi / 100;
                         mforceID = parseFloat(mforceID * 4.44822).toFixed(3);
 
                         var mMa = parseFloat(models[i].Ma * 0.11298).toFixed(3);
-                        var mMb = parseFloat(models[i].Mb_Mc * 0.11298).toFixed(3);
-                        var mStroke = models[i].Stroke__in_;
+                        var mMb = parseFloat(models[i].MbMc * 0.11298).toFixed(3);
+                        var mStroke = models[i].Stroke;
                         var strokeArr = mStroke.split(" ");
                         if (strokeArr.length > 2) {
                             for (var k = 0; k < strokeArr.length; k++) {
@@ -255,7 +283,7 @@ function GetModel(Ma, Mb, unit) {
                             mStroke = parseFloat(strokeArr[0] * 25.4).toFixed(3);
                         }
 
-                        mcell1.innerHTML = models[i].GripperName;
+                        mcell1.innerHTML = models[i].ModelName;
                         mcell2.innerHTML = mMa;
                         mcell3.innerHTML = mMb;
                         mcell4.innerHTML = mStroke;
@@ -278,13 +306,13 @@ function GetModel(Ma, Mb, unit) {
                         var cell5 = row.insertCell(4);
                         var cell6 = row.insertCell(5);
 
-                        var forceOD = models[j].Force_OD * psi / 100;
-                        var forceID = models[j].Force_ID * psi / 100;
+                        var forceOD = models[j].ForceOD * psi / 100;
+                        var forceID = models[j].ForceID * psi / 100;
 
-                        cell1.innerHTML = models[j].GripperName;
+                        cell1.innerHTML = models[j].ModelName;
                         cell2.innerHTML = models[j].Ma;
-                        cell3.innerHTML = models[j].Mb_Mc;
-                        cell4.innerHTML = models[j].Stroke__in_;
+                        cell3.innerHTML = models[j].MbMc;
+                        cell4.innerHTML = models[j].Stroke;
                         cell5.innerHTML = forceOD;
                         cell6.innerHTML = forceID;
 
@@ -298,6 +326,7 @@ function GetModel(Ma, Mb, unit) {
 
             }
             else {
+                alert(models);
                 //if a form value was not submitted or there was an error returning the model array, the submit button hides and the hidden div with only the refresh button appears
                 document.getElementById('btn').style.display = "none";
                 document.getElementById('mbtn').style.display = "none";
@@ -409,7 +438,7 @@ function SaveData(callback) {
         formdata.push({ Field: "Model Stroke (mm)", Value: "" + mstroke2 });
         formdata.push({ Field: "Model Closing Force (N)", Value: "" + cforce2 });
         formdata.push({ Field: "Model Opening Force (N)", Value: "" + oforce2 });
-  
+
     }
     else {
         var igrip;
