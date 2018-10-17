@@ -3,18 +3,128 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Zaytran Automation</title>
+    <title>Zaytran Sizer Form</title>
+    <link href="~/Content/Layout Style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/zaytranicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <h1 align="center">
+        <img alt="Long Stroke Grippers" height="95" src="~/Content/Images/Logo-smmed-Res.jpg"  width="360" class="auto-style1">
+    </h1>
+    <div align="center">
+        <ul class="navlist">
+            <li><a href="http://www.grippers.com/">Grippers Home</a></li>
+            <li><a href="http://www.grippers.com/gpl.htm">GPAL</a></li>
+            <li><a href="http://www.grippers.com/magnum.htm">Magnum</a></li>
+            <li>
+                <a href="http://www.grippers.com/xray_s.htm">Xray-S</a><br>
+                <br>
+            </li>
+            <li><a href="http://www.grippers.com/catalogs.htm">Catalogs</a></li>
+            <li><a href="http://www.grippers.com/cad.htm">Cad Files</a></li>
+            <li><a href="http://www.grippers.com/size.htm">Gripper Sizing</a></li>
+            <li>
+                <a href="http://www.grippers.com/gripper_applications.htm">Images</a>
+            </li>
+            <li><a href="http://www.grippers.com/articles/">Applications</a></li>
+            <li><a href="mailto:support@grippers.com">Email</a></li>
+        </ul>
+    </div>
+
     @RenderBody()
-    <hr />
-    <footer class="text-center">
-        <p>&copy; @DateTime.Now.Year - Zaytran Automation</p>
+    <br />
+    <footer class="text-center" id="foot">
+
+        <div align="center">
+          
+            <table border="0" cellpadding="0" cellspacing="0" width="85%">
+                <tbody>
+                    <tr>
+                        <td align="center" class="text-center">
+                            <a href="#"><i class="fas fa-angle-double-up text-center"></i> Top <i class="fas fa-angle-double-up"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="foottd">
+
+                            <p align="center">
+                                <strong>
+                                    <font size="2" face="Arial">
+                                        Call us at 440-324-2814 : FAX
+                                        440-324-3552
+                                    </font>
+                                </strong>
+                            </p>
+
+                            <p align="center"><strong><font size="2" face="Arial">email <a href="mailto:support@grippers.com">support@grippers.com</a></font></strong></p>
+
+                            <p align="center"><font size="1" face="Arial">PO Box 1660 : Elyria, Ohio 44036 U.S.A.</font></p>
+
+                            <p align="center"><font size="1" face="Arial">© Copyright&nbsp; ZAYTRAN, Inc All Rights Reserved.&nbsp;</font></p>
+
+                            <p align="center"><font size="1" face="Arial"> MAGNUM and XRAY Are Registered Trademarks of ZAYTRAN, Inc.&nbsp;</font></p>
+
+                            <p align="center">
+                                <font face="Arial" size="1">
+                                    <a href="./">
+                                        Grippers Home
+                                    </a>&nbsp; |&nbsp;
+                                </font><font face="Arial">
+                                    <a href="magnum.htm">
+                                        <em style="font-style: normal"><font size="1">Magnum Grippers</font></em>
+                                    </a>
+                                </font><em style="font-style: normal">
+                                    <font face="Arial" size="1">
+                                        &nbsp;
+                                        |&nbsp;
+                                    </font>
+                                </em><font face="Arial">
+                                    <em style="font-style: normal"><font size="1">&nbsp;</font></em>
+                                </font><font size="1" face="Arial">
+                                    <a href="http://www.grippers.com/gpl.htm">
+                                        GPAL
+                                        Grippers
+                                    </a>&nbsp;
+                                    |&nbsp;
+                                    <em style="font-style: normal">
+                                        <a href="xray_s.htm">
+                                            XRAY-S Long Stroke Grippers
+                                        </a>
+                                    </em>
+                                </font><br>
+                                <strong style="font-weight: 400">
+                                    <font face="Arial" size="1">
+                                        <a href="gripper_applications.htm">
+                                            P
+                                        </a>
+                                    </font>
+                                </strong><font face="Arial" size="1">
+                                    <a href="gripper_applications.htm">
+                                        <strong style="font-weight: 400">
+                                            hoto
+                                            Gallery
+                                        </strong>
+                                    </a><strong style="font-weight: 400">&nbsp; |&nbsp; <a href="size.htm">Gripper Sizing</a>&nbsp; |&nbsp; </strong>
+                                    <a href="cad.htm">
+                                        <strong style="font-weight: 400">CAD Files</strong>
+                                    </a>&nbsp;&nbsp; |&nbsp;
+                                    <a href="catalogs.htm">
+                                        <strong style="font-weight: 400">Catalogs</strong>
+                                    </a>
+                                </font>
+                            </p>
+
+                            <hr color="#000080">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </footer>
-
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

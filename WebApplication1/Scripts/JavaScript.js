@@ -16,6 +16,15 @@ var unit = "imperial";
 var psi;
 var currentPanel = '1';
 
+//This only does something on the test site somee.com
+$(document).ready(function () {
+    $("div[style='opacity: 0.9; z-index: 2147483647; position: fixed; left: 0px; bottom: 0px; height: 65px; right: 0px; display: block; width: 100%; background-color: #202020; margin: 0px; padding: 0px;']").remove();
+    $("div[style='margin: 0px; padding: 0px; left: 0px; width: 100%; height: 65px; right: 0px; bottom: 0px; display: block; position: fixed; z-index: 2147483647; opacity: 0.9; background-color: rgb(32, 32, 32);']").remove();
+    $("div[onmouseover='S_ssac();']").remove();
+    $("center").remove();
+});
+
+
 //Function that gets which units are being shown on form (metric or imperial)
 function GetUnits() {
     $('.panelControlBtn').on("click", function () {
@@ -26,14 +35,14 @@ function GetUnits() {
             });
             currentPanel = ID;
             if (currentPanel === '1') {
-                $("#imp").css("background-color", "#3A3A3A");
+                $("#imp").css("background-color", "forestgreen");
                 $("#imp").css("box-shadow", "2px 5px 15px rgba(0, 0, 0, 0.5)");
                 $('#met').css("background-color", "#8F9491");
                 $("#met").css("box-shadow", "none");
                 unit = "imperial";
             }
             else if (currentPanel === '2') {
-                $("#met").css("background-color", "#3A3A3A");
+                $("#met").css("background-color", "forestgreen");
                 $("#met").css("box-shadow", "2px 5px 15px rgba(0, 0, 0, 0.5)");
                 $('#imp').css("background-color", "#8F9491");
                 $("#imp").css("box-shadow", "none");
@@ -53,37 +62,33 @@ function GetUnits() {
 //GSide gets the value for the g force left to right
 function GSide(callback) {
     unit = callback();
-    if (unit === "metric") {
-        gside = document.getElementById('mgside').value;
-        if (gside === "") {
-            gside = 0;
+
+    if (callback() === "metric") {
+        if (document.getElementById('mmodeltable').getElementsByTagName('tr').length > 1) {
+            document.getElementById("mmodeltable").deleteRow(-1);
+            document.getElementById("mmodeltable").deleteRow(-1);
         }
-        gside = parseFloat(gside);
-        gside = gside / 9.80665;
-        g = document.getElementById('mgup').value;
-        if (g === "") {
-            g = 0;
-        }
-        g = parseFloat(g);
-        g = g / 9.80665;
-        //since g force up down is always + 1, the value for gup is saved with +1 here instead of adding 1 every time gup is used
-        gup = g + 1;
     }
-    else {
-        gside = document.getElementById('gside').value;
-        if (gside === "") {
-            gside = 0;
+    if (callback() === "imperial") {
+        if (document.getElementById('modeltable').getElementsByTagName('tr').length > 1) {
+            document.getElementById("modeltable").deleteRow(-1);
+            document.getElementById("modeltable").deleteRow(-1);
         }
-        gside = parseFloat(gside);
-        console.log("the value for gside is " + gside);
-        g = document.getElementById('gup').value;
-        if (g === "") {
-            g = 0;
-        }
-        g = parseFloat(g);
-        //since g force up down is always + 1, the value for gup is saved with +1 here instead of adding 1 every time gup is used
-        gup = g + 1;
     }
+
+    gside = document.getElementById('gside').value;
+    if (gside === "") {
+        gside = 0;
+    }
+    gside = parseFloat(gside);
+    console.log("the value for gside is " + gside);
+    g = document.getElementById('gup').value;
+    if (g === "") {
+        g = 0;
+    }
+    g = parseFloat(g);
+    //since g force up down is always + 1, the value for gup is saved with +1 here instead of adding 1 every time gup is used
+    gup = g + 1;
 
     // values gside, gup and unit are then passed to CalculateMaxG function
     CalculateMaxG(gside, gup, unit);
@@ -143,10 +148,10 @@ function GetForce(gside, gup, maxG, friction, unit) {
         force = force * 4;
     }
     if (unit === "metric") {
-        document.getElementById('mforce').value = Number(Math.round(force + 'e3') + 'e-3');
+        document.getElementById('mforce').value = Number(Math.round(force + 'e2') + 'e-2');
     }
     else {
-        document.getElementById('force').value = force;
+        document.getElementById('force').value = Number(Math.round(force + 'e2') + 'e-2');
     }
     jtorque = force * jlength;
 
@@ -180,12 +185,11 @@ function GetM(side, up, orientation, jtorque) {
     }
     if (unit === "metric") {
         Ma = Ma * 0.11298;
-        document.getElementById('mmainch').value = Number(Math.round(Ma + 'e3') + 'e-3');
+        document.getElementById('mmainch').value = Number(Math.round(Ma + 'e2') + 'e-2');
 
     }
     else {
-        document.getElementById('mainch').value = Ma;
-        document.getElementById('mafoot').value = Ma / 12;
+        document.getElementById('mainch').value = Number(Math.round(Ma + 'e2') + 'e-2');
     }
 
     if (orientation === "Left-Right") {
@@ -196,11 +200,10 @@ function GetM(side, up, orientation, jtorque) {
     }
     if (unit === "metric") {
         Mb = Mb * 0.11298;
-        document.getElementById('mmbmcinch').value = Number(Math.round(Mb + 'e3') + 'e-3');
+        document.getElementById('mmbmcinch').value = Number(Math.round(Mb + 'e2') + 'e-2');
     }
     else {
-        document.getElementById('mbmcinch').value = Mb;
-        document.getElementById('mbmcfoot').value = Mb / 12;
+        document.getElementById('mbmcinch').value = Number(Math.round(Mb + 'e2') + 'e-2');
     }
 
     //Then getmodel function is called
@@ -319,17 +322,20 @@ function GetModel(Ma, Mb, unit) {
                     }
                 }
 
-                // after the table data is created, the function hides the submit button and shows the hidden div containing the save and refresh button
-                document.getElementById('btn').style.display = "none";
-                document.getElementById('mbtn').style.display = "none";
+                // after the table data is created, the function shows the hidden div containing the save and refresh button
+                if (document.getElementById('hiddendiv2').style.display === "block") {
+                    document.getElementById('hiddendiv2').style.display = "none";
+                }
+
                 document.getElementById('hiddendiv').style.display = "block";
 
             }
             else {
                 alert(models);
-                //if a form value was not submitted or there was an error returning the model array, the submit button hides and the hidden div with only the refresh button appears
-                document.getElementById('btn').style.display = "none";
-                document.getElementById('mbtn').style.display = "none";
+                //if a form value was not submitted or there was an error returning the model array, the hidden div with only the refresh button appears
+                if (document.getElementById('hiddendiv').style.display === "block") {
+                    document.getElementById('hiddendiv').style.display = "none";
+                }
                 document.getElementById('hiddendiv2').style.display = "block";
             }
         }
@@ -361,8 +367,6 @@ function ReloadForm(callback) {
     //it then hides the hidden divs and displays the submut buttons again
     document.getElementById("hiddendiv").style.display = "none";
     document.getElementById("hiddendiv2").style.display = "none";
-    document.getElementById('btn').style.display = "block";
-    document.getElementById('mbtn').style.display = "block";
 }
 
 //This function only runs if the save button is clicked
@@ -411,8 +415,7 @@ function SaveData(callback) {
 
 
 
-        formdata.push({ Field: "FIELD", Value: "VALUE" });
-        formdata.push({ Field: "***Application Description***", Value: "***Application Description***" });
+        formdata.push({ Field: "APPLICATION DESCRIPTION", Value: " " });
         formdata.push({ Field: "Pressure (BAR)", Value: "" + document.getElementById('mpsi').value });
         formdata.push({ Field: "ID or OD", Value: "" + midod });
         formdata.push({ Field: "Max Part Weight (Kg)", Value: "" + document.getElementById('mMaxwt').value });
@@ -420,12 +423,14 @@ function SaveData(callback) {
         formdata.push({ Field: "Jaw Length (mm)", Value: "" + document.getElementById('mjlength').value });
         formdata.push({ Field: "Jaw Orientation", Value: "" + morient });
         formdata.push({ Field: "Force Up/Down (m/s2)", Value: "" + document.getElementById('mgup').value });
-        formdata.push({ Field: "Force Left/Righ (m/s2)", Value: "" + document.getElementById('mgside').value });
-        formdata.push({ Field: "***Application Requirements***", Value: "***Application Requirements***" });
+        formdata.push({ Field: "Force Left/Right (m/s2)", Value: "" + document.getElementById('mgside').value });
+        formdata.push({ Field: " ", Value: " " });
+        formdata.push({ Field: "APPLICATION REQUIREMENTS", Value: " " });
         formdata.push({ Field: "Force Required (N)", Value: "" + document.getElementById('mforce').value });
         formdata.push({ Field: "Ma (Joules)", Value: "" + document.getElementById('mmainch').value });
         formdata.push({ Field: "Mb/Mc (Joules)", Value: "" + document.getElementById('mmbmcinch').value });
-        formdata.push({ Field: "***Reccomendations***", Value: "***Reccomendations***" });
+        formdata.push({ Field: " ", Value: " " });
+        formdata.push({ Field: "RECCOMENDATIONS", Value: " " });
         formdata.push({ Field: "Model Name", Value: "" + model1 });
         formdata.push({ Field: "Model Ma (Joules)", Value: "" + ma1 });
         formdata.push({ Field: "Model Mb (Joules)", Value: "" + mbmc1 });
@@ -477,8 +482,7 @@ function SaveData(callback) {
         var ioforce2 = itable.rows[2].cells[5].innerHTML;
 
 
-        formdata.push({ Field: "FIELD", Value: "VALUE" });
-        formdata.push({ Field: "***Application Description***", Value: "***Application Description***" });
+        formdata.push({ Field: "APPLICATION DESCRIPTION", Value: " " });
         formdata.push({ Field: "Pressure (PSI)", Value: "" + document.getElementById('psi').value });
         formdata.push({ Field: "ID or OD", Value: "" + iidod });
         formdata.push({ Field: "Max Part Weight (lb)", Value: "" + document.getElementById('Maxwt').value });
@@ -486,14 +490,14 @@ function SaveData(callback) {
         formdata.push({ Field: "Jaw Length (in)", Value: "" + document.getElementById('jlength').value });
         formdata.push({ Field: "Jaw Orientation", Value: "" + iorient });
         formdata.push({ Field: "Force Up/Down (G Force)", Value: "" + document.getElementById('gup').value });
-        formdata.push({ Field: "Force Left/Righ (G Force)", Value: "" + document.getElementById('gside').value });
-        formdata.push({ Field: "***Application Requirements***", Value: "***Application Requirements***" });
+        formdata.push({ Field: "Force Left/Right (G Force)", Value: "" + document.getElementById('gside').value });
+        formdata.push({ Field: " ", Value: " " });
+        formdata.push({ Field: "APPLICATION REQUIREMENTS", Value: " " });
         formdata.push({ Field: "Force Required (lb)", Value: "" + document.getElementById('force').value });
         formdata.push({ Field: "Ma (in/pounds)", Value: "" + document.getElementById('mainch').value });
         formdata.push({ Field: "Mb/Mc (in/pounds)", Value: "" + document.getElementById('mbmcinch').value });
-        formdata.push({ Field: "Ma (ft/pounds)", Value: "" + document.getElementById('mafoot').value });
-        formdata.push({ Field: "Mb/Mc (ft/pounds)", Value: "" + document.getElementById('mbmcfoot').value });
-        formdata.push({ Field: "***Reccomendations***", Value: "***Reccomendations***" });
+        formdata.push({ Field: " ", Value: " " });
+        formdata.push({ Field: "RECOMMENDATIONS", Value: " " });
         formdata.push({ Field: "Model Name", Value: "" + imodel1 });
         formdata.push({ Field: "Model Ma (in/pound)", Value: "" + ima1 });
         formdata.push({ Field: "Model Mb (in/pound)", Value: "" + imbmc1 });

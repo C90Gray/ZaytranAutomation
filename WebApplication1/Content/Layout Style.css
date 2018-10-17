@@ -1,0 +1,45 @@
+﻿/* CSS Tabs */
+.navlist {
+    padding: 2px 0 2px 0;
+    margin: 0 0 8px 2px;
+    border-bottom: 1px solid #778;
+    font: Bold 17px Arial Narrow, Helvetica;
+}
+
+    .navlist li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: inline;
+    }
+
+        .navlist li a {
+            padding: 2px 0.5em 2px 0.5em;
+            margin-left: 2px;
+            border: 1px solid #778;
+            border-bottom: none;
+            background: #FFF;
+            text-decoration: none;
+        }
+
+            .navlist li a:link {
+                color: #000;
+            }
+
+            .navlist li a:visited {
+                color: #000;
+            }
+
+            .navlist li a:hover {
+                color: #000;
+                background: #AAE;
+                border-color: #227;
+            }
+
+#foot {
+    background-color: white!important;
+}
+
+.foottd{
+    background-color:white;
+}

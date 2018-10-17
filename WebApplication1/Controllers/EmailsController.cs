@@ -37,7 +37,9 @@ namespace WebApplication1.Models
                     string companyName = "Zaytran Automation";
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<table width='100%' cellspacing='0' cellpadding='2'>");
-                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Zaytran Sizer Forms</b></td></tr>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'><b>Zaytran Inc. Sizer Forms</b></td></tr>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'>Telephone: 440-324-2814</td></tr>");
+                    sb.Append("<tr><td align='center' style='background-color: #18B5F0' colspan = '2'>email: support@grippers.com</td></tr>");
                     sb.Append("<tr><td colspan = '2'></td></tr>");
                     sb.Append("</td><td><b>Date: </b>");
                     sb.Append(DateTime.Now);
@@ -54,23 +56,50 @@ namespace WebApplication1.Models
                     sb.Append("</table>");
                     sb.Append("<br />");
                     sb.Append("<table border = '1'>");
-                  
+
+
+                    var index = 0;
+                    var x = 0;
                     foreach (DataRow row in dt.Rows)
                     {
-                        sb.Append("<tr style= 'text-align:center'>");
+                        index = x;
+
+                        if (index == 0 || index == 10 || index == 15)
+                        {
+                            sb.Append("<tr style = 'text-align:center; font-weight:bold;'>");
+                        }
+                   
+                        else
+                        {
+                            sb.Append("<tr style= 'text-align:left'>");
+                        }
                         foreach (DataColumn column in dt.Columns)
                         {
-                            sb.Append("<td>");
-                            sb.Append(row[column]);
-                            sb.Append("</td>");
+                            if (index == 16 || index == 22)
+                            {
+                                sb.Append("<td bgcolor='yellow'>");
+                                sb.Append(row[column]);
+                                sb.Append("</td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td>");
+                                sb.Append(row[column]);
+                                sb.Append("</td>");
+                            }
                         }
                         sb.Append("</tr>");
+                        x++;
                     }
                     sb.Append("</table>");
                     StringReader sr = new StringReader(sb.ToString());
 
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+#pragma warning disable CS0612 // Type or member is obsolete
+#pragma warning disable CS0612 // Type or member is obsolete
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+#pragma warning restore CS0612 // Type or member is obsolete
+#pragma warning restore CS0612 // Type or member is obsolete
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
                         PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -96,6 +125,22 @@ namespace WebApplication1.Models
                         smtp.Credentials = NetworkCred;
                         smtp.Port = 587;
                         smtp.Send(mm);
+
+                        MailMessage mb = new MailMessage("donotreply.zaytranautomation@gmail.com", "support@grippers.com");
+                        mb.Subject = "Gripper Sizer Form";
+                        mb.Body = "Attatched is a new Gripper Sizer Form. <br><br> The User is " + model.Email.Username + " and they can be contacted at " + model.Email.EmailAdd;
+                        mb.Attachments.Add(new Attachment(new MemoryStream(bytes), "iTextSharpPDF.pdf"));
+                        mb.IsBodyHtml = true;
+                        SmtpClient smtb = new SmtpClient();
+                        smtb.Host = "smtp.gmail.com";
+                        smtb.EnableSsl = true;
+                        smtb.UseDefaultCredentials = false;
+                        NetworkCredential NetworkCreb = new NetworkCredential();
+                        NetworkCreb.UserName = "donotreply.zaytranautomation@gmail.com";
+                        NetworkCreb.Password = "W3S3llgrippers";
+                        smtb.Credentials = NetworkCred;
+                        smtb.Port = 587;
+                        smtb.Send(mb);
                     }
 
                 }

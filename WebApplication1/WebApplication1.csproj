@@ -156,7 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmailsController.cs" />
     <Compile Include="Controllers\GrippersController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SizerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,8 +193,13 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Friction-Encomp.gif" />
+    <Content Include="Content\Images\idodimage.gif" />
     <Content Include="Content\Images\jaworientation.PNG" />
+    <Content Include="Content\Images\Logo-smmed-Res.jpg" />
     <Content Include="Content\Images\ZaytranDiagram.png" />
+    <Content Include="Content\Layout Style.css" />
+    <Content Include="zaytranicon.ico" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Content\StyleSheet1.css" />
     <Content Include="favicon.ico" />
@@ -243,6 +248,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -275,14 +281,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Grippers\Create.cshtml" />
-    <Content Include="Views\Grippers\Delete.cshtml" />
-    <Content Include="Views\Grippers\Details.cshtml" />
-    <Content Include="Views\Grippers\Edit.cshtml" />
-    <Content Include="Views\Grippers\Index.cshtml" />
+    <Content Include="Views\Sizer\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -295,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
